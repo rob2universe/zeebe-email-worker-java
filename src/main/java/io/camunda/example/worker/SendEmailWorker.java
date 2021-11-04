@@ -21,7 +21,7 @@ public class SendEmailWorker implements JobHandler {
   public static final String EMAIL_BODY_VAR = "mailBody";
   public static final String EMAIL_SUBJECT_VAR = "mailSubject";
   public static final String EMAIL_FROM = "my.worker@camunda.cloud";
-  public static final String EMAIL_TO = "could come from data too";
+  public static final String EMAIL_TO = "robert.emsbach@camunda.com";
 
   public JavaMailSender mailSender;
 
@@ -34,14 +34,14 @@ public class SendEmailWorker implements JobHandler {
   public void handle(JobClient client, ActivatedJob job) {
 
     try {
+      // read process data
       final Map<String, Object> variables = job.getVariablesAsMap();
       String emailBody = (String) variables.get(EMAIL_BODY_VAR);
       if (null==emailBody) throw new RuntimeException("Missing process data: " + EMAIL_BODY_VAR);
-
       String emailSubject = (String) variables.get(EMAIL_SUBJECT_VAR);
       if (null==emailSubject) throw new RuntimeException("Missing process data: " + EMAIL_SUBJECT_VAR);
 
-      //send email
+      // send email
       MimeMessage message =mailSender.createMimeMessage();
       MimeMessageHelper helper = new MimeMessageHelper(message, false, "utf-8");
       helper.setTo(EMAIL_TO);
