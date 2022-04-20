@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  c8-email-worker:
+    container_name: c8-email-worker
+    image: camunda-demo/c8-email-worker
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+     - logging.level.root=info
+#    ports:
+#    - "8080:8080"
+
